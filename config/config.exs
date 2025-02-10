@@ -47,7 +47,7 @@ config :spark,
 config :teammor,
   ecto_repos: [Teammor.Repo],
   generators: [timestamp_type: :utc_datetime],
-  ash_domains: [Teammor.Accounts]
+  ash_domains: [Teammor.Accounts, Teammor.Checkins, Teammor.Teams]
 
 # Configures the endpoint
 config :teammor, TeammorWeb.Endpoint,

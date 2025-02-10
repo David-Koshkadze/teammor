@@ -273,6 +273,10 @@ defmodule Teammor.Accounts.User do
     end
   end
 
+  relationships do
+    has_many :checkins, Teammor.Health.Checkin
+  end
+
   identities do
     identity :unique_email, [:email]
   end
