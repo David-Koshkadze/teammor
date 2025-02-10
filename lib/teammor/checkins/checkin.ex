@@ -1,5 +1,5 @@
-defmodule Teammor.Health.Checkin do
-  use Ash.Resource, domain: Teammor.Health, data_layer: AshPostgres.DataLayer
+defmodule Teammor.Checkins.Checkin do
+  use Ash.Resource, domain: Teammor.Checkins, data_layer: AshPostgres.DataLayer
 
   postgres do
     table "checkins"
@@ -18,8 +18,8 @@ defmodule Teammor.Health.Checkin do
         allow_nil? false
       end
 
-      change manage_relationship(:user_id, :user)
-      change manage_relationship(:team_id, :team_id)
+      change manage_relationship(:user_id, :user, on_no_match: :error)
+      change manage_relationship(:team_id, :team, on_no_match: :error)
     end
 
     read :read do

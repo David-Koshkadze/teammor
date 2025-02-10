@@ -274,7 +274,8 @@ defmodule Teammor.Accounts.User do
   end
 
   relationships do
-    has_many :checkins, Teammor.Health.Checkin
+    has_many :checkins, Teammor.Checkins.Checkin
+    has_many :team_members, Teammor.Teams.TeamMember
   end
 
   identities do

@@ -20,8 +20,8 @@ defmodule Teammor.Teams.TeamMember do
         allow_nil? false
       end
 
-      change manage_relationship(:team_id, :team)
-      change manage_relationship(:user_id, :user)
+      change manage_relationship(:team_id, :team, on_no_match: :error)
+      change manage_relationship(:user_id, :user, on_no_match: :error)
     end
 
     read :read do
@@ -32,9 +32,9 @@ defmodule Teammor.Teams.TeamMember do
   attributes do
     uuid_primary_key :id
 
-    attribute :role, :string do
-      constraints one_of: ["member", "manager"]
-      default "member"
+    attribute :role, :atom do
+      constraints one_of: [:member, :manager]
+      default :member
     end
 
     create_timestamp :inserted_at

@@ -3,5 +3,6 @@ defmodule Teammor.Teams do
 
   resources do
     resource Teammor.Teams.Team
+    resource Teammor.Teams.TeamMember
   end
 end
