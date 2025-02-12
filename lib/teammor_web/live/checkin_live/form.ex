@@ -8,6 +8,8 @@ defmodule TeammorWeb.CheckinLive.Form do
   def mount(_params, _session, socket) do
     current_user = socket.assigns.current_user
 
+    IO.inspect(socket.assigns)
+
     user_with_teams =
       current_user
       |> Ash.load!(:team_memberships)
@@ -132,7 +134,7 @@ defmodule TeammorWeb.CheckinLive.Form do
   def handle_event("save", params, socket) do
     current_user = socket.assigns.current_user
 
-    case Checkins.create(%{
+    case Checkins.Checkin.create(%{
            user_id: current_user.id,
            team_id: params["team_id"],
            mood_score: String.to_integer(params["mood_score"]),

@@ -6,6 +6,12 @@ defmodule Teammor.Teams.Team do
     repo Teammor.Repo
   end
 
+  code_interface do
+    define :create_team, action: :create, args: [:name]
+    define :list_teams, action: :read
+    define :update_name, action: :update_name
+  end
+
   actions do
     create :create do
       primary? true
@@ -17,6 +23,12 @@ defmodule Teammor.Teams.Team do
 
     read :read do
       primary? true
+    end
+
+    update :update_name do
+      primary? true
+      accept [:name]
+      change set_attribute(:name, arg(:name))
     end
   end
 
