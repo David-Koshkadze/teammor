@@ -90,6 +90,8 @@ defmodule TeammorWeb do
       # Core UI components
       import TeammorWeb.CoreComponents
 
+      import TeammorWeb.Components.AlertDialog
+
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
 

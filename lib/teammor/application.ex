@@ -8,6 +8,8 @@ defmodule Teammor.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      # Start TwMerge cache
+      TwMerge.Cache,
       TeammorWeb.Telemetry,
       Teammor.Repo,
       {DNSCluster, query: Application.get_env(:teammor, :dns_cluster_query) || :ignore},
@@ -18,7 +20,7 @@ defmodule Teammor.Application do
       # {Teammor.Worker, arg},
       # Start to serve requests, typically the last entry
       TeammorWeb.Endpoint,
-      {AshAuthentication.Supervisor, [otp_app: :teammor]}
+      {AshAuthentication.Supervisor, [otp_app: :teammor]},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
