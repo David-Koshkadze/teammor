@@ -1,30 +1,24 @@
 defmodule TeammorWeb.CheckinLive.Form do
   use TeammorWeb, :live_view
 
-  alias Teammor.Checkins
-
   on_mount {TeammorWeb.LiveUserAuth, :live_user_required}
 
   def mount(_params, _session, socket) do
-    current_user = socket.assigns.current_user
+    user =
+      socket.assigns.current_user |> Ash.load!(:team_members) |> Ash.load!(team_members: :team)
 
-    IO.inspect(socket.assigns)
+    IO.inspect(user, label: "user")
 
-    user_with_teams =
-      current_user
-      |> Ash.load!(:team_memberships)
-      |> Ash.load!(team_memberships: :team)
+    teams = user.team_members |> Enum.map(& &1.team)
 
-    teams =
-      user_with_teams.team_memberships
-      |> Enum.map(& &1.team)
+    IO.inspect(teams, label: "teams for current_user")
 
     case teams do
       [] ->
         {:ok,
          socket
          |> put_flash(:error, "You need to be part of a team to submit check-ins")
-         |> redirect(to: ~p"/teams/new")}
+         |> redirect(to: ~p"/")}
 
       [team] ->
         {:ok,
@@ -134,7 +128,7 @@ defmodule TeammorWeb.CheckinLive.Form do
   def handle_event("save", params, socket) do
     current_user = socket.assigns.current_user
 
-    case Checkins.Checkin.create(%{
+    case Teammor.Checkins.Checkin.create(%{
            user_id: current_user.id,
            team_id: params["team_id"],
            mood_score: String.to_integer(params["mood_score"]),

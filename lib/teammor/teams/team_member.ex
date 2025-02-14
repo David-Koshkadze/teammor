@@ -8,6 +8,10 @@ defmodule Teammor.Teams.TeamMember do
     repo Teammor.Repo
   end
 
+  code_interface do
+    define :create
+  end
+
   actions do
     create :create do
       primary? true
@@ -20,8 +24,8 @@ defmodule Teammor.Teams.TeamMember do
         allow_nil? false
       end
 
-      change manage_relationship(:team_id, :team, on_no_match: :error)
-      change manage_relationship(:user_id, :user, on_no_match: :error)
+      change set_attribute(:team_id, arg(:team_id))
+      change set_attribute(:user_id, arg(:user_id))
     end
 
     read :read do
@@ -45,6 +49,8 @@ defmodule Teammor.Teams.TeamMember do
     belongs_to :team, Teammor.Teams.Team do
       attribute_writable? true
       allow_nil? false
+      source_attribute :team_id
+      destination_attribute :id
     end
 
     belongs_to :user, Teammor.Accounts.User do

@@ -20,7 +20,7 @@ defmodule Teammor.Application do
       # {Teammor.Worker, arg},
       # Start to serve requests, typically the last entry
       TeammorWeb.Endpoint,
-      {AshAuthentication.Supervisor, [otp_app: :teammor]},
+      {AshAuthentication.Supervisor, [otp_app: :teammor]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
