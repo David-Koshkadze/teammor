@@ -35,9 +35,9 @@ defmodule Teammor.Teams.Team do
       # create the TeamMember record
       change fn changeset, _ ->
         case TeamMember.create(%{
-          team_id: changeset.arguments.team_id,
-          user_id: changeset.arguments.user_id
-        }) do
+               team_id: changeset.arguments.team_id,
+               user_id: changeset.arguments.user_id
+             }) do
           {:ok, _team_member} ->
             {:ok, changeset}
 
@@ -80,6 +80,7 @@ defmodule Teammor.Teams.Team do
       source_attribute :id
       destination_attribute :team_id
     end
+
     has_many :checkins, Teammor.Checkins.Checkin
   end
 end
