@@ -6,20 +6,32 @@ defmodule Teammor.Checkins.Checkin do
     repo Teammor.Repo
   end
 
+  code_interface do
+    define :create, action: :create
+  end
+
   actions do
     create :create do
       primary? true
 
-      argument :user_id, :uuid do
-        allow_nil? false
-      end
+      argument :user_id, :uuid, allow_nil?: false
+      argument :team_id, :uuid, allow_nil?: false
+      argument :mood_score, :integer, allow_nil?: false
+      argument :stress_level, :integer, allow_nil?: false
+      argument :workload_level, :integer, allow_nil?: false
+      argument :notes, :string, allow_nil?: true
 
-      argument :team_id, :uuid do
-        allow_nil? false
-      end
+      accept [:user_id, :team_id, :mood_score, :stress_level, :workload_level, :notes]
 
-      change manage_relationship(:user_id, :user, on_no_match: :error)
-      change manage_relationship(:team_id, :team, on_no_match: :error)
+      # change manage_relationship(:user_id, :user, type: :append_and_remove)
+      # change manage_relationship(:team_id, :team, type: :append_and_remove)
+
+      change set_attribute(:user_id, arg(:user_id))
+      change set_attribute(:team_id, arg(:team_id))
+      change set_attribute(:mood_score, arg(:mood_score))
+      change set_attribute(:stress_level, arg(:stress_level))
+      change set_attribute(:workload_level, arg(:workload_level))
+      change set_attribute(:notes, arg(:notes))
     end
 
     read :read do

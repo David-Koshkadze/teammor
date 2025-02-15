@@ -10,8 +10,6 @@ defmodule TeammorWeb.CheckinLive.Form do
     user =
       socket.assigns.current_user |> Ash.load!(:team_members) |> Ash.load!(team_members: :team)
 
-    # IO.inspect(user, label: "user")
-
     teams = user.team_members |> Enum.map(& &1.team)
 
     case teams do
@@ -150,7 +148,7 @@ defmodule TeammorWeb.CheckinLive.Form do
         {:noreply,
          socket
          |> put_flash(:info, "Check-in submitted successfully!")
-         |> redirect(to: ~p"/dashboard")}
+         |> redirect(to: ~p"/")}
 
       {:error, changeset} ->
         {:noreply,

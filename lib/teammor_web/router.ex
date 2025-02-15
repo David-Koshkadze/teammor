@@ -31,7 +31,6 @@ defmodule TeammorWeb.Router do
       # on_mount {TeammorWeb.LiveUserAuth, :live_user_required}
 
       live "/checkin", CheckinLive.Form
-      live "/ui", UILive.UITest
 
       # If an authenticated user *may* be present:
       # on_mount {TeammorWeb.LiveUserAuth, :live_user_optional}
