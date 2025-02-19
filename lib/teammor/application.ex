@@ -8,6 +8,8 @@ defmodule Teammor.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      # Start TwMerge cache
+      TwMerge.Cache,
       TeammorWeb.Telemetry,
       Teammor.Repo,
       {DNSCluster, query: Application.get_env(:teammor, :dns_cluster_query) || :ignore},
