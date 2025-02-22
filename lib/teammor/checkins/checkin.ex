@@ -8,6 +8,7 @@ defmodule Teammor.Checkins.Checkin do
 
   code_interface do
     define :create, action: :create
+    define :list_checkins, action: :read
   end
 
   actions do

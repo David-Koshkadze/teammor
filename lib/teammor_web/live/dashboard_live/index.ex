@@ -4,7 +4,9 @@ defmodule TeammorWeb.DashboardLive.Index do
   on_mount {TeammorWeb.LiveUserAuth, :live_user_required}
 
   def on_mount(_params, _session, socket) do
-    {:noreply, assign(socket, :current_user, socket.assigns.current_user)}
+    checkins = Teammor.Checkins.Checkin.list_checkins()
+
+    {:ok, assign(socket, checkins: checkins)}
   end
 
   def render(assigns) do
@@ -23,6 +25,13 @@ defmodule TeammorWeb.DashboardLive.Index do
           <span class="text-2xl font-bold mr-2">12</span>
           <span class="text-sm text-gray-600">Today</span>
         </div>
+
+        <%= for checkin <- @checkins do %>
+          <div class="flex items-center mt-2">
+            <span class="text-sm text-gray-600 mr-2"><%= checkin.date %></span>
+            <span class="text-sm text-gray-600"><%= checkin.mood_score %></span>
+          </div>
+        <% end %>
       </div>
 
       <div class="bg-white p-4 rounded shadow">
